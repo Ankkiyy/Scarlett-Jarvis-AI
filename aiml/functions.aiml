@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<aiml version="1.0">
+
+<category>
+    <pattern>SET TALK SPEED *</pattern>
+    <template>
+        TALK SPEED <star />
+    </template>
+</category>
+<category>
+    <pattern>CHANGE THE TALK SPEED TO *</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><star/></set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+<category>
+    <pattern>EXIT</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><star/></set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>SET TALK SPEED TO *</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><star/></set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>INCREASE TALK SPEED</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> + 10</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>DECREASE TALK SPEED</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> - 10</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>MAKE JARVIS TALK FASTER</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> + 20</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>MAKE JARVIS TALK SLOWER</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> - 20</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>TALK FASTER</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> + 10</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>TALK SLOWER</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> - 10</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>SPEED UP THE TALK</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> + 20</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>SLOW DOWN THE TALK</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> - 20</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>ADJUST TALK SPEED TO *</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><star/></set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>SET JARVIS' SPEECH SPEED TO *</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><star/></set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>CHANGE THE VOICE SPEED TO *</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><star/></set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>MAKE THE VOICE FAST</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> + 10</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>MAKE THE VOICE SLOW</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> - 10</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>FASTER TALKING</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> + 20</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>SLOWER TALKING</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><get name="TALK_SPEED" /> - 20</set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>CHANGE VOICE SPEED TO *</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><star/></set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>ADJUST THE TALKING SPEED TO *</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><star/></set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>SET THE SPEECH SPEED TO *</pattern>
+    <template>
+        <think><set name="TALK_SPEED"><star/></set></think>
+        <srai>SET TALK SPEED</srai>
+    </template>
+</category>
+
+</aiml>
