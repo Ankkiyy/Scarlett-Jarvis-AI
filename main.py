@@ -55,8 +55,9 @@ while True:
     if user_input.strip().lower() == "exit":
         break
 
+    print(user_input)
     aiml_response = kernel.respond(user_input)
-
+    print(aiml_response)
 
     if "python" in aiml_response:
         script = aiml_response.split("python")[1].strip()

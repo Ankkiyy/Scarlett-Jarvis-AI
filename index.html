@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AIML Chatbot</title>
+  </head>
+  <body>
+    <div>
+      <h1>AIML Chatbot</h1>
+      <div id="chat">
+        <div id="output"></div>
+        <input type="text" id="input" placeholder="Type a message..." />
+        <button id="send">Send</button>
+      </div>
+    </div>
+
+    <script>
+      const chatOutput = document.getElementById("output");
+      const chatInput = document.getElementById("input");
+      const sendButton = document.getElementById("send");
+
+      const ws = new WebSocket("ws://localhost:3000"); // Update with your server's URL
+
+      ws.addEventListener("open", (event) => {
+        console.log("WebSocket connection established.");
+      });
+
+      ws.addEventListener("message", (event) => {
+        const answer = event.data;
+        // chatOutput.innerHTML += `<p><strong>You:</strong> ${chatInput.value}</p>`;
+        chatOutput.innerHTML += `<p><strong>Bot:</strong> ${answer}</p>`;
+        chatInput.value = "";
+      });
+
+      sendButton.addEventListener("click", () => {
+        const message = chatInput.value;
+        chatOutput.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+        ws.send(message); // Send the message
+      });
+    </script>
+  </body>
+</html>
