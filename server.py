@@ -3,6 +3,7 @@ import websockets
 import aiml
 import subprocess
 import os
+import json
 
 # Initialize AIML kernel
 kernel = aiml.Kernel()
@@ -31,7 +32,7 @@ async def respond(websocket, path):
             script = aiml_response.split("python")[1].strip()
             subprocess.call(script, shell=True)
         else:
-            await websocket.send(aiml_response)
+            await websocket.send(json.dumps({"data": aiml_response}))
 
 print("Listening on port 3000 : http://localhost:3000")
 start_server = websockets.serve(respond, "localhost", 3000)
