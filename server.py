@@ -22,19 +22,11 @@ else:
 
 async def respond(websocket, path):
     while True:
-        
         user_input = await websocket.recv()
-
-        print(user_input)
-
         if user_input.strip().lower() == "exit":
             await websocket.send("Goodbye!")
             break
-
         aiml_response = kernel.respond(user_input)
-
-        print(aiml_response)
-
         if "python" in aiml_response:
             script = aiml_response.split("python")[1].strip()
             subprocess.call(script, shell=True)
