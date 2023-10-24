@@ -8,6 +8,4 @@ To Stop It
 
 **CTRL + C**
 
-then v333333333333333333333333333333333333333
-
 **deactivate**
