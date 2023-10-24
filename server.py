@@ -44,5 +44,5 @@ async def respond(websocket, path):
 print("Listening on port 3000 : http://localhost:3000")
 start_server = websockets.serve(respond, "localhost", 3000)
 
-asyncio.get_event_loop().run_untilcomplete(start_server)
+asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
