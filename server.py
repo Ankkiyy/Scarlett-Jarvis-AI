@@ -27,15 +27,22 @@ async def respond(websocket, path):
         if user_input.strip().lower() == "exit":
             await websocket.send("Goodbye!")
             break
-        aiml_response = kernel.respond(user_input)
-        if "python" in aiml_response:
-            script = aiml_response.split("python")[1].strip()
-            subprocess.call(script, shell=True)
-        else:
-            await websocket.send(json.dumps({"data": aiml_response}))
+
+        try:
+            # Check if the input is valid JSON
+            json_input = json.loads(user_input)
+            # If it's valid JSON, do nothing and ignore the request
+        except json.JSONDecodeError:
+            # If it's not valid JSON, process and respond
+            aiml_response = kernel.respond(user_input)
+            if "python" in aiml_response:
+                script = aiml_response.split("python")[1].strip()
+                subprocess.call(script, shell=True)
+            else:
+                await websocket.send(json.dumps({"response": aiml_response}))
 
 print("Listening on port 3000 : http://localhost:3000")
 start_server = websockets.serve(respond, "localhost", 3000)
 
-asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_untilcomplete(start_server)
 asyncio.get_event_loop().run_forever()
