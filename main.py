@@ -1,69 +1,56 @@
-import pyttsx3 as pyttsx
-import aiml
-import speech_recognition as sr
-import subprocess
 import os
-
-TALK_SPEED = 140
-
-engine = pyttsx.init()
-voices = engine.getProperty('voices')
-print(voices)
-for voice in voices:
-    print(voice, voice.id)
-    engine.setProperty('voice', voice.id)
-    engine.say("Hello World!")
-
-def speak(jarvis_speech):
-    engine.setProperty('rate', TALK_SPEED)  # Set the talk speed
-    engine.say(jarvis_speech)
-    engine.runAndWait()
-
-def listen():
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Talk to J.A.R.V.I.S: ")
-        audio = r.listen(source)
-    try:
-        recognized_text = r.recognize_google(audio)
-        print(recognized_text)
-        return recognized_text
-    except sr.UnknownValueError:
-        speak("I couldn't understand what you said! Would you like to repeat?")
-        return listen()
-    except sr.RequestError as e:
-        print("Could not request results from Google Speech Recognition service; {0}".format(e))
-
+import aiml
+import asyncio
+import websockets
+import json  # Added import for JSON handling
 
 brain_file = "aiml_brain.brn"
 
-kernel = aiml.Kernel()
-
-# Check if the AIML brain file exists
-if os.path.isfile(brain_file):
-    # If the brain file exists, load it
-    kernel.bootstrap(brainFile=brain_file)
-else:
-    # If the brain file doesn't exist, load AIML files and save the brain
-    kernel.learn("startup.xml")
-    kernel.respond("load aiml")
-    kernel.saveBrain(brain_file)
-    print(f"AIML brain saved to {brain_file}")
-
-while True:
-    user_input = listen()
-    if user_input.strip().lower() == "exit":
-        break
-
-    print(user_input)
-    aiml_response = kernel.respond(user_input)
-    print(aiml_response)
-
-    if "python" in aiml_response:
-        script = aiml_response.split("python")[1].strip()
-        subprocess.call(script, shell=True)
-    elif "TALK SPEED" in aiml_response:
-        TALK_SPEED = int(aiml_response.split("TALK SPEED")[1].strip())
-        speak("Talk speed changed to " + str(TALK_SPEED))
+try:
+    print("Initializing AIML kernel...")
+    kernel = aiml.Kernel()
+    
+    if os.path.isfile(brain_file):
+        print("Loading AIML brain from file...")
+        kernel.bootstrap(brainFile=brain_file)
     else:
-        speak(aiml_response)
+        print("Learning AIML from startup.xml...")
+        kernel.learn("startup.xml")
+        kernel.respond("load aiml")
+        kernel.saveBrain(brain_file)
+        print(f"AIML brain saved to {brain_file}")
+except Exception as e:
+    print(f"Error during AIML kernel initialization: {e}")
+
+# Replace time.clock() with time.time() if AIML kernel was initialized successfully
+if 'kernel' in locals() and isinstance(kernel, aiml.Kernel):
+    try:
+        file_path = "/data/data/com.termux/files/usr/lib/python3.11/site-packages/aiml/Kernel.py"
+        os.system(f"sed -i 's/time\.clock()/time.time()/g' {file_path}")
+        print("time.clock() replaced with time.time() successfully.")
+    except Exception as e:
+        print(f"Error replacing time.clock(): {e}")
+
+async def handle_websocket(websocket, path):
+    async for message in websocket:
+        user_input = message
+        aiml_response = kernel.respond(user_input)
+        response_data = {'response': aiml_response}
+        
+        print(f"Received message: {user_input}")
+        print(f"AIML Response: {aiml_response}")
+        
+        try:
+            # Convert response_data to JSON before sending
+            response_json = json.dumps(response_data)
+            await websocket.send(response_json)
+            print("Response sent successfully.")
+        except Exception as e:
+            print(f"Error sending response: {e}")
+
+if __name__ == '__main__':
+    print("Starting WebSocket server...")
+    start_server = websockets.serve(handle_websocket, "localhost", 3000)
+
+    asyncio.get_event_loop().run_until_complete(start_server)
+    asyncio.get_event_loop().run_forever()
